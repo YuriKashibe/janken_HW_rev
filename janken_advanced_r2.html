@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<script src="js/jquery-2.1.3.min.js"></script>
+<link rel="stylesheet" href="css/sample.css">
+<title>5手じゃんけん</title>
+</head>
+<body>
+
+<header>
+  <h1>5手じゃんけん</h1>
+</header>
+
+<main>
+  <div class="remains">あなたの持ち手</div>
+  <ul id="btns">
+    <button id="gu_btn">グー</button>
+    <button id="cho_btn">チョキ</button>
+    <button id="par_btn">パー</button>
+    <button id="lizard_btn">トカゲ</button>
+    <button id="spock_btn">スポック</button>
+  </ul>
+  <section class="result">
+    <div class="hand">
+        <h2 id="your_hand">あなたの手</h2>
+        <div id="image_field1"></div>
+    </div>
+    <div id="judgment"></div>
+    <div class="hand">
+        <h2 id="pc_hand">PCの手</h2>
+        <div id="image_field2"></div>
+    </div>
+  </section>
+
+  <ul>
+    <li id="pc_gu_btn">グー</li>
+    <li id="pc_cho_btn">チョキ</li>
+    <li id="pc_par_btn">パー</li>
+    <li id="pc_lizard_btn">トカゲ</li>
+    <li id="pc_spock_btn">スポック</li>
+  </ul>
+  <div class="remains">PCの持ち手</div> 
+</main>
+
+<footer></footer>
+<script>
+
+function getRandomNumber(min, max) {
+    let step1 = max - min + 1;
+    let step2 = Math.random() * step1;
+    let result = Math.floor(step2) + min;
+    return result;
+}
+function createArrayOfNumbers(start, end){
+    let myArray = [];
+    for(let i = start; i <= end; i++) { 
+        myArray.push(i);
+    }
+    return myArray;
+}
+let numbersArray = createArrayOfNumbers(1,5);
+$("#btns").on("click", function random(){
+    if(numbersArray.length == 0){
+        $("#btns").prop("disabled", true);
+        $("#btns").css("cursor", "default");
+        return;
+    }
+    let randomIndex = getRandomNumber(0, numbersArray.length-1);
+    let randomNumber = numbersArray[randomIndex];
+    numbersArray.splice(randomIndex, 1)
+
+    if (randomNumber == 1){
+      $("#pc_hand").html("PCの手：グー")
+      $("#image_field2").html('<img src="img/gu.jpg" width="300">');
+      $("#pc_gu_btn").css("color","#000000");
+      $("#pc_gu_btn").css("background-color","#000000");
+      if (event.target($("#gu_btn"))){
+        $("#judgment").html("あいこ");
+        $("#judgment").css("color","#008000");
+      } else if (event.target($("#cho_btn"))){
+        $("#judgment").html("あなたの負け");
+        $("#judgment").css("color","#ff0000");
+      } else if (event.target($("#par_btn"))){
+        $("#judgment").html("あなたの勝ち");
+        $("#judgment").css("color","#0000ff");
+      } else if (event.target($("#lizard_btn"))){
+        $("#judgment").html("あなたの負け");
+        $("#judgment").css("color","#ff0000");
+      } else if (event.target($("#spock_btn"))){
+        $("#judgment").html("あなたの勝ち");
+        $("#judgment").css("color","#0000ff");
+      }
+    } else if (randomNumber == 2) {
+      $("#pc_hand").html("PCの手：チョキ")
+      $("#image_field2").html('<img src="img/choki.jpg" width="300">');
+      $("#pc_cho_btn").css("color","#000000");
+      $("#pc_cho_btn").css("background-color","#000000");
+    } else if (randomNumber == 3) {
+      $("#pc_hand").html("PCの手：パー")
+      $("#image_field2").html('<img src="img/pa.jpg" width="300">');
+      $("#pc_par_btn").css("color","#000000");
+      $("#pc_par_btn").css("background-color","#000000");
+    } else if (randomNumber == 4){
+      $("#pc_hand").html("PCの手：トカゲ")
+      $("#image_field2").html('<img src="img/lizard.jpg" width="300">');
+      $("#pc_lizard_btn").css("color","#000000");
+      $("#pc_lizard_btn").css("background-color","#000000");
+    } else if (randomNumber == 5){
+      $("#pc_hand").html("PCの手：スポック")
+      $("#image_field2").html('<img src="img/spock.jpg" width="300">');
+      $("#pc_spock_btn").css("color","#000000");
+      $("#pc_spock_btn").css("background-color","#000000");
+    }
+
+});
+
+  $("#gu_btn").on("click",function(){
+    $("#gu_btn").css("color","#000000");
+    $("#gu_btn").css("background-color","#000000");
+    $("#gu_btn").prop("disabled", true);
+    $("#gu_btn").css("cursor", "default");
+
+    $("#your_hand").html("あなたの手：グー")
+    $("#image_field1").html('<img src="img/gu.jpg" width="300">');
+    });
+
+
+  $("#cho_btn").on("click",function(){
+    $("#cho_btn").css("color","#000000");
+    $("#cho_btn").css("background-color","#000000");
+    $("#cho_btn").prop("disabled", true);
+    $("#cho_btn").css("cursor", "default");
+
+    $("#your_hand").html("あなたの手：チョキ")
+    $("#image_field1").html('<img src="img/choki.jpg" width="300">');
+
+    if (randomNumber == 1) {
+      $("#judgment").html("あなたの負け");
+      $("#judgment").css("color","#0000ff");
+    } else if (randomNumber == 2) {
+      $("#judgment").html("あいこ");
+      $("#judgment").css("color","#008000");
+    } else if (randomNumber == 3) {
+      $("#judgment").html("あなたの勝ち");
+      $("#judgment").css("color","#ff0000");
+    } else if (randomNumber == 4){
+      $("#judgment").html("あなたの勝ち");
+      $("#judgment").css("color","#ff0000"); 
+    } else if (randomNumber == 5){
+      $("#judgment").html("あなたの負け");
+      $("#judgment").css("color","#0000ff");
+    }
+    $("#cho_btn").prop("disabled", true);
+    $("#cho_btn").css("cursor", "default");
+  })
+
+  $("#par_btn").on("click",function(){
+    $("#par_btn").css("color","#000000");
+    $("#par_btn").css("background-color","#000000");
+    $("#par_btn").prop("disabled", true);
+    $("#par_btn").css("cursor", "default");
+
+    $("#your_hand").html("あなたの手：パー")
+    $("#image_field1").html('<img src="img/pa.jpg" width="300">');
+
+    if (randomNumber == 1) {
+      $("#judgment").html("あなたの勝ち");
+      $("#judgment").css("color","#ff0000");
+    } else if (randomNumber == 2) {
+      $("#judgment").html("あなたの負け");
+      $("#judgment").css("color","#0000ff");
+    } else if (randomNumber == 3) {
+      $("#judgment").html("あいこ");
+      $("#judgment").css("color","#008000");
+    } else if (randomNumber == 4){
+      $("#judgment").html("あなたの負け");
+      $("#judgment").css("color","#0000ff"); 
+    } else if (randomNumber == 5){
+      $("#judgment").html("あなたの勝ち");
+      $("#judgment").css("color","#ff0000");
+    }
+    $("#par_btn").prop("disabled", true);
+    $("#par_btn").css("cursor", "default");
+  })
+
+  $("#lizard_btn").on("click",function(){
+    $("#lizard_btn").css("color","#000000");
+    $("#lizard_btn").css("background-color","#000000");
+    $("#lizard_btn").prop("disabled", true);
+    $("#lizard_btn").css("cursor", "default");
+
+    $("#your_hand").html("あなたの手：トカゲ")
+    $("#image_field1").html('<img src="img/lizard.jpg" width="300">');
+
+    if (randomNumber == 1) {
+      $("#judgment").html("あなたの負け");
+      $("#judgment").css("color","#0000ff");
+    } else if (randomNumber == 2) {
+      $("#judgment").html("あなたの負け");
+      $("#judgment").css("color","#0000ff");
+    } else if (randomNumber == 3) {
+      $("#judgment").html("あなたの勝ち");
+      $("#judgment").css("color","#ff0000");
+    } else if (randomNumber == 4){
+      $("#judgment").html("あいこ");
+      $("#judgment").css("color","#008000");
+    } else if (randomNumber == 5){
+      $("#judgment").html("あなたの勝ち");
+      $("#judgment").css("color","#ff0000");
+    }
+    $("#lizard_btn").prop("disabled", true);
+    $("#lizard_btn").css("cursor", "default");
+  })
+
+  $("#spock_btn").on("click",function(){
+    $("#spock_btn").css("color","#000000");
+    $("#spock_btn").css("background-color","#000000");
+    $("#spock_btn").prop("disabled", true);
+    $("#spock_btn").css("cursor", "default");
+
+    $("#your_hand").html("あなたの手：スポック")
+    $("#image_field1").html('<img src="img/spock.jpg" width="300">');
+
+    if (randomNumber == 1) {
+      $("#judgment").html("あなたの勝ち");
+      $("#judgment").css("color","#ff0000");
+    } else if (randomNumber == 2) {
+      $("#judgment").html("あなたの勝ち");
+      $("#judgment").css("color","#ff0000");
+    } else if (randomNumber == 3) {
+      $("#judgment").html("あなたの負け");
+      $("#judgment").css("color","#0000ff");
+    } else if (randomNumber == 4){
+      $("#judgment").html("あなたの負け"); 
+      $("#judgment").css("color","#0000ff"); 
+    } else if (randomNumber == 5){
+      $("#judgment").html("あいこ");
+      $("#judgment").css("color","#008000");
+    }
+    $("#spock_btn").prop("disabled", true);
+    $("#spock_btn").css("cursor", "default");
+  })
+
+  
+//じゃんけん用のSCRIPTを書いてください
+
+// グーボタンを押したら？→if式を使う(?)
+
+// コンピュータの出す手はmath object参照。パターンを数字に置き換えて、random表示する。
+    
+    
+    
+    
+    
+    
+
+</script>
+</body>
+</html>
